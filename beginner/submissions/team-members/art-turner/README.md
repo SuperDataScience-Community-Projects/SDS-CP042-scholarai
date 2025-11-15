@@ -1,3 +1,15 @@
+---
+title: ScholarAI Research Assistant
+emoji: 📚
+colorFrom: blue
+colorTo: purple
+sdk: gradio
+sdk_version: 4.16.0
+app_file: app.py
+pinned: false
+license: mit
+---
+
 # ScholarAI - Beginner Track Submission
 
 **Author:** Art Turner
