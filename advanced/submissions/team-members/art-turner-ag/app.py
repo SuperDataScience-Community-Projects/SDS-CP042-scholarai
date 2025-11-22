@@ -5,9 +5,16 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-def run_research(topic):
+def run_research(topic, progress=gr.Progress()):
     workflow = ResearchWorkflow()
-    final_report, research_findings = workflow.run(topic)
+    
+    def progress_callback(message, step=None, total_steps=None):
+        if step is not None and total_steps is not None:
+            progress(step / total_steps, desc=message)
+        else:
+            progress(0, desc=message)
+
+    final_report, research_findings = workflow.run(topic, progress_callback=progress_callback)
     
     findings_display = ""
     for subtopic, finding in research_findings.items():
