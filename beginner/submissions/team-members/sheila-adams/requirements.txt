@@ -40,7 +40,7 @@ ipykernel
 # openpyxl
 
 openai-agents
-python-dotenv
+python-dotenv>=1.0.0
 tavily-python
 gradio>=5.7.1
 requests>=2.31.0
