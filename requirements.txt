@@ -1,46 +1,14 @@
 # Contains all libraries that are needed for this project
 
-# Data manipulation and analysis
-# pandas
-# numpy
-
-# Visualization
-# matplotlib
-# seaborn
-# plotly
-
-# Machine learning
-# scikit-learn
-# xgboost
-# lightgbm
-# catboost
-
-# Deep learning
-# tensorflow
-# keras
-# torch
-# torchvision
-
-# Data processing
-# scipy
-
 # Jupyter support
 jupyter
 notebook
 ipykernel
 
-# Model evaluation
-# statsmodels
 
-# Utilities
-# tqdm
-
-# Optional: Data connectors
-# sqlalchemy
-# openpyxl
-
-openai-agents
+openai>=1.0.0
 python-dotenv>=1.0.0
-tavily-python
+tavily-python>=0.3.0
 gradio>=5.7.1
 requests>=2.31.0
+pydantic>=2.12.3
