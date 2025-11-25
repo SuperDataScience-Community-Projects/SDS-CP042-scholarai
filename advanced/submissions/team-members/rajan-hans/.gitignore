@@ -1,0 +1,9 @@
+.env
+__pycache__/
+.gitignore
+.venv
+/archive
+.python-version
+pyproject.toml
+uv.lock 
+requirements.txt
