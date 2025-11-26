@@ -1,0 +1,14 @@
+# Contains all libraries that are needed for this project
+
+# Jupyter support
+jupyter
+notebook
+ipykernel
+
+
+openai>=1.0.0
+python-dotenv>=1.0.0
+tavily-python>=0.3.0
+gradio>=5.7.1
+requests>=2.31.0
+pydantic>=2.12.3
