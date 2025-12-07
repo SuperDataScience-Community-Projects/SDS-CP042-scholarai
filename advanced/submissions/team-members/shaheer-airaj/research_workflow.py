@@ -134,8 +134,49 @@ async def research_workflow(user_query: str) -> list[str]:
     return formatted_research
 
 
+async def run_research_pipeline(user_query: str) -> tuple[str, str]:
+    """
+    Main pipeline function for Gradio interface.
+    Returns: (final_report, research_details)
+    """
+    try:
+        logger.info(f"Starting research pipeline for query: {user_query}")
+        
+        research = await research_workflow(user_query)
+
+        triage_decision = await Runner.run(triage_agent, research)
+        logger.info(f"Triage choice: {triage_decision.last_agent.name}")
+        
+        if triage_decision.last_agent.name == "OptimizerAgent":
+            if triage_decision.final_output.needs_more_research == True:
+                logger.info(f"Optimizer decided more research is needed with reason: {triage_decision.final_output.reason}")
+                # For Gradio, we'll do one iteration only
+                research = await research_workflow(user_query)
+                synthesizer_result = await Runner.run(synthesizer_agent, research)
+                final_report = synthesizer_result.final_output
+            else:
+                logger.info("Optimizer decided research is sufficient, proceeding to synthesis.")
+                synthesizer_result = await Runner.run(synthesizer_agent, research)
+                final_report = synthesizer_result.final_output
+        else:
+            logger.info("Triage decided to send research directly to synthesis.")
+            final_report = triage_decision.final_output
+
+        logger.info("="*80)
+        logger.info("FINAL SYNTHESIZED REPORT")
+        logger.info("="*80)
+        logger.info(final_report)
+        
+        return final_report, research
+        
+    except Exception as e:
+        logger.error(f"Error in research pipeline: {str(e)}", exc_info=True)
+        error_message = f"An error occurred during research: {str(e)}"
+        return error_message, ""
+
+
 async def main():
-    user_query = "Should I buy, hold or sell Apple stocks at the current projected market conditions?"
+    user_query = input("Enter your research topic: ")
     
     while True:
         research = await research_workflow(user_query)
